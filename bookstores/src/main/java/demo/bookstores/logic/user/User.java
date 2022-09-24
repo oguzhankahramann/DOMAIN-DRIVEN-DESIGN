@@ -2,6 +2,13 @@ package demo.bookstores.logic.user;
 
 
 
+import javax.validation.constraints.Email;
+
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,13 +17,19 @@ import demo.bookstores.logic.common.Entity;
 import demo.bookstores.logic.common.ValueObject;
 @Document(collection = "users")
 public class User extends Entity{
-	
+	//solid'in S'sine aykiri fakat Java community bu sekilde yapıyor
+	@NotNull
+	@NotBlank
 	private String ad;
 	
-
+	@NotNull
+	@NotBlank
 	private String soyad;
 	
-	
+	@NotNull
+	@NotBlank
+	@Size(min = 11 )
+	@Size(max = 11 )
 	private String tcKn;
 	
 	
@@ -26,6 +39,7 @@ public class User extends Entity{
 	
 	private String role;
 	
+	@Email
 	private String email;
 	
 	private String password;

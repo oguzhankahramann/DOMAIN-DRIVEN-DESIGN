@@ -14,7 +14,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import demo.bookstores.core.results.DataResult;
+import demo.bookstores.core.results.ErrorResult;
+import demo.bookstores.core.results.Result;
+import demo.bookstores.core.results.SuccessDataResult;
+import demo.bookstores.core.results.SuccessResult;
+import demo.bookstores.logic.constants.Messages;
 import demo.bookstores.logic.repository.dao.UserDao;
+
 
 
 @Service(value="myUserService")
@@ -45,32 +53,62 @@ public class UserAggregate implements UserDetailsService{
 	
 	
 	   
-	public void updateUser(ObjectId id, User user) {
+	public Result updateUser(ObjectId id, User user) {
 		
 		
 		this.userDao.modifyUser(id, user);
-		System.out.println("USER MODIFIED SUCCESSFULLY");
+		return new SuccessResult(Messages.UserUpdatedSuccesfully);
 	}
 	
 	
-	public void addUser(User user) {
+	public Result addUser(User user) {
+		if(!this.isEmailExist(user.getEmail()).isSuccess() || !this.isTcKnExist(user.getTcKn()).isSuccess()) {
+			
+			return new ErrorResult("entered valid email or valid tc");
+		}
 		
-		this.userDao.addUser(user);
-		System.out.println("USER SUCCESSFULLY ADDED !");
+		else if (!this.isUsernameExist(user.getUsername()).isSuccess()) {
+			return new ErrorResult("entered valid username");
+		}
+		else {
+			this.userDao.addUser(user);
+			return new SuccessResult(Messages.UserAddedSuccesfully);
+		}
+		
 	}
-	public List<User> getAll() {
+	public DataResult<List<User>> getAll() {
 
-	    return this.userDao.findAllUser();
+	    return new SuccessDataResult<List<User>>(this.userDao.findAllUser(),Messages.UserListed);
 	}
 	
 	public User findUser(String Username) {
 		return this.userDao.findOne(Username);
 	}
 	
-
-
 	
+	private Result isEmailExist(String email) {
+		if(this.userDao.findByEmail(email)!= null) {
+			return new ErrorResult("You have entered a used mail address!");
+		}
+		else{return new SuccessResult("You can use your mail address");}
+ 	 
+	}
 
+	private Result isUsernameExist(String username) {
+		if(this.userDao.findByUsername(username)!= null) {
+			return new ErrorResult("You have entered a used username address!");
+		}
+		else{return new SuccessResult("You can use your username address");}
+ 	 
+	}
+
+	private Result isTcKnExist(String tcKn) {
+		if(this.userDao.findByUsername(tcKn)!= null) {
+			return new ErrorResult("You have entered a used tckimlikno!");
+		}
+		else{return new SuccessResult("You can use your tckno");}
+ 	 
+	}
 
 	
 

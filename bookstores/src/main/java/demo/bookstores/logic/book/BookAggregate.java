@@ -7,6 +7,11 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import demo.bookstores.core.results.DataResult;
+import demo.bookstores.core.results.Result;
+import demo.bookstores.core.results.SuccessDataResult;
+import demo.bookstores.core.results.SuccessResult;
+import demo.bookstores.logic.constants.Messages;
 import demo.bookstores.logic.repository.IBookRepository;
 
 @Service
@@ -15,14 +20,14 @@ public class BookAggregate {
 	@Autowired
 	private IBookRepository bookRepository;
 
-	public void addBook(Book book) {
+	public Result addBook(Book book) {
 		this.bookRepository.save(book);
-		System.out.println("BOOK SUCCESSFULLY ADDED");
+		return new SuccessResult(Messages.BookAdded);
 	}
 
-	public List<Book> getAll() {
+	public DataResult<List<Book>> getAll() {
 
-		return this.bookRepository.findAll();
+		return new SuccessDataResult<List<Book>>(this.bookRepository.findAll(),Messages.BookListed);
 
 	}
 	//begenmedim içeriye tasinabilir
@@ -39,7 +44,7 @@ public class BookAggregate {
 		bookProperties.setPrice(book.getPrice());
 		bookProperties.setStock(book.getStock());
 		this.bookRepository.save(book);
-		System.out.println("BOOK SUCCESSFULLY MODIFIED ");
+		
 		
 		
 	}

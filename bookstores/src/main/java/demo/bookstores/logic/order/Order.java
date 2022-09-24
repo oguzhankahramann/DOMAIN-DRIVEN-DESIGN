@@ -1,6 +1,10 @@
 package demo.bookstores.logic.order;
 
+import javax.validation.constraints.Min;
+
+
 import org.bson.types.ObjectId;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import demo.bookstores.logic.common.Entity;
@@ -12,7 +16,8 @@ public class Order extends Entity{
 		super(id);
 		// TODO value object field gectikten sonra newlemeyi unutma
 	}
-
+	
+	@Min(value = 0)
 	private int orderQuantity;
 	
 	private double price;
@@ -21,6 +26,8 @@ public class Order extends Entity{
 	
 	private ObjectId userId;
 	
+	
+
 	
 	public int getOrderQuantity() {
 		return orderQuantity;
@@ -53,6 +60,9 @@ public class Order extends Entity{
 	public void setUserId(ObjectId userId) {
 		this.userId = userId;
 	}
+
+	
+	
 	
 	
 }

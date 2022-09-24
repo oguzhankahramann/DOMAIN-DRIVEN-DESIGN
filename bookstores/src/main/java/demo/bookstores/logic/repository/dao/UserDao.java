@@ -44,6 +44,14 @@ public class UserDao {
 		return this.userRepository.findByUsername(username);
 	}
 	
+	public User findByUsername(String username) {
+		return this.userRepository.findByUsername(username);
+	}
+	public User findByEmail(String email) {
+		return this.userRepository.findByEmail(email);
+	}
 	
-
+	public User findByTcKn(String tcKn) {
+		return this.userRepository.findByTcKn(tcKn);
+	}
 }

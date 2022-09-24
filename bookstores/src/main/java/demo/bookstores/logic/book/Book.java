@@ -1,21 +1,34 @@
 package demo.bookstores.logic.book;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import demo.bookstores.logic.common.Entity;
 @Document(collection = "books")
 public class Book extends Entity {
-	
+	@NotNull
+	@NotBlank
 	private String bookName;
-	
+	@NotNull
+	@NotBlank
 	private String isbno;
 	
+	@Min(value = 0)
 	private int stock;
 	
+	@NotNull
+	@Min(value = 0)
 	private double price;
 	
 	ValueObjectBook valueObjectBook;
+	
+	@Version
+	private Integer version;
 	
 	public Book(ObjectId id) {
 		super(id);
@@ -54,6 +67,14 @@ public class Book extends Entity {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 		

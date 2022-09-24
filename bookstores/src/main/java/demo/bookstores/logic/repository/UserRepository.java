@@ -10,4 +10,6 @@ import demo.bookstores.logic.user.User;
 @Repository
 public interface UserRepository extends MongoRepository<User, ObjectId> {
 	User findByUsername(String username);
+	User findByEmail(String email);
+	User findByTcKn(String tcKn);
 }

@@ -70,8 +70,13 @@
     <version>2.3.1</version><!--$NO-MVN-MAN-VER$-->
 </dependency>
 	
+<dependency> 
 	
-	</dependencies>
+	 <groupId>org.springframework.boot</groupId>
+	 <artifactId>spring-boot-starter-validation</artifactId>
+	 </dependency>
+	 
+</dependencies>
 
 	<build>
 		<plugins>
